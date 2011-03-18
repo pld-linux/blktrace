@@ -1,27 +1,30 @@
-Summary:	utilities for block layer IO tracing
+Summary:	Utilities for block layer I/O tracing
+Summary(pl.UTF-8):	Narzędzia do śledzenia we/wy warstwy blokowej
 Name:		blktrace
-Version:	1.0.0
+Version:	1.0.2
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://brick.kernel.dk/snaps/%{name}-%{version}.tar.bz2
-# Source0-md5:	e58f359f6c27efe7043be19abb8b95ba
+# Source0-md5:	088e30d28d0be8e32d1d3a839bde6946
+BuildRequires:	libaio-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-blktrace is a block layer IO tracing mechanism which provides detailed
-information about request queue operations up to user space. There are
-three major components that are provided:
+blktrace is a block layer I/O tracing mechanism which provides
+detailed information about request queue operations up to user space.
+This is valuable for diagnosing and fixing performance or application
+problems relating to block layer I/O.
 
-blktrace: A utility which transfers event traces from the kernel into
-either long-term on-disk storage, or provides direct formatted output
-(via blkparse).
-
-blkparse: A utility which formats events stored in files, or when run
-in live mode directly outputs data collected by blktrace.
+%description -l pl.UTF-8
+blktrace to mechanizm do śledzenia we/wy warstwy blokowej,
+zapewniający szczegółowe informacje o operacjach kolejki żądań dla
+przestrzeni użytkownika. Jest to bardzo przydatne przy diagnostyce i
+naprawianiu problemów z wydajnością lub aplikacjami związanych z we/wy
+warstwy blokowej.
 
 %prep
-%setup -q -n %{name}
+%setup -q
 
 %build
 %{__make} \
@@ -32,7 +35,12 @@ in live mode directly outputs data collected by blktrace.
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{makeinstall}
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	prefix=%{_prefix} \
+	mandir=%{_mandir}
+
+mv $RPM_BUILD_ROOT%{_bindir}/{bno_plot.py,bno_plot}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -40,5 +48,23 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc README
-%attr(755,root,root) %{_bindir}/*
-%{_mandir}/man?/*
+%attr(755,root,root) %{_bindir}/blkiomon
+%attr(755,root,root) %{_bindir}/blkparse
+%attr(755,root,root) %{_bindir}/blkrawverify
+%attr(755,root,root) %{_bindir}/blktrace
+%attr(755,root,root) %{_bindir}/bno_plot
+%attr(755,root,root) %{_bindir}/btrace
+%attr(755,root,root) %{_bindir}/btrecord
+%attr(755,root,root) %{_bindir}/btreplay
+%attr(755,root,root) %{_bindir}/btt
+%attr(755,root,root) %{_bindir}/verify_blkparse
+%{_mandir}/man1/blkparse.1*
+%{_mandir}/man1/blkrawverify.1*
+%{_mandir}/man1/bno_plot.1*
+%{_mandir}/man1/btt.1*
+%{_mandir}/man1/verify_blkparse.1*
+%{_mandir}/man8/blkiomon.8*
+%{_mandir}/man8/blktrace.8*
+%{_mandir}/man8/btrace.8*
+%{_mandir}/man8/btrecord.8*
+%{_mandir}/man8/btreplay.8*
