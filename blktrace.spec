@@ -1,12 +1,12 @@
 Summary:	Utilities for block layer I/O tracing
 Summary(pl.UTF-8):	Narzędzia do śledzenia we/wy warstwy blokowej
 Name:		blktrace
-Version:	1.0.3
+Version:	1.0.4
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://brick.kernel.dk/snaps/%{name}-%{version}.tar.bz2
-# Source0-md5:	03cd3ea3eb43f9381ff0caee0bdaec2b
+# Source0-md5:	37a05a277a8c92274798c8bc226da416
 BuildRequires:	libaio-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
