@@ -1,13 +1,14 @@
 Summary:	Utilities for block layer I/O tracing
 Summary(pl.UTF-8):	Narzędzia do śledzenia we/wy warstwy blokowej
 Name:		blktrace
-Version:	1.0.5
+Version:	1.1.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://brick.kernel.dk/snaps/%{name}-%{version}.tar.bz2
-# Source0-md5:	02914c0b51fd16f36095436374e14cc7
+# Source0-md5:	f759d09e315dbdc0ce1010ee747c6893
 BuildRequires:	libaio-devel
+BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -26,6 +27,8 @@ warstwy blokowej.
 %prep
 %setup -q
 
+%{__sed} -i -e '1s, /usr/bin/env python,/usr/bin/python,' btt/b??_plot.py
+
 %build
 %{__make} -j1 \
 	CC="%{__cc}" \
@@ -39,7 +42,7 @@ rm -rf $RPM_BUILD_ROOT
 	prefix=%{_prefix} \
 	mandir=%{_mandir}
 
-mv $RPM_BUILD_ROOT%{_bindir}/{bno_plot.py,bno_plot}
+%{__mv} $RPM_BUILD_ROOT%{_bindir}/{bno_plot.py,bno_plot}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -56,6 +59,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/btrecord
 %attr(755,root,root) %{_bindir}/btreplay
 %attr(755,root,root) %{_bindir}/btt
+%attr(755,root,root) %{_bindir}/iowatcher
 %attr(755,root,root) %{_bindir}/verify_blkparse
 %{_mandir}/man1/blkparse.1*
 %{_mandir}/man1/blkrawverify.1*
