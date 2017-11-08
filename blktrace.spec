@@ -1,12 +1,12 @@
 Summary:	Utilities for block layer I/O tracing
 Summary(pl.UTF-8):	Narzędzia do śledzenia we/wy warstwy blokowej
 Name:		blktrace
-Version:	1.1.0
+Version:	1.2.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
 Source0:	http://brick.kernel.dk/snaps/%{name}-%{version}.tar.bz2
-# Source0-md5:	f759d09e315dbdc0ce1010ee747c6893
+# Source0-md5:	b9a80b7cc0a50f7a96d34c570ab8224d
 BuildRequires:	libaio-devel
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -32,7 +32,7 @@ warstwy blokowej.
 %build
 %{__make} -j1 \
 	CC="%{__cc}" \
-	CFLAGS="%{rpmcflags}" \
+	CFLAGS="%{rpmcflags} %{rpmcppflags}" \
 	LDFLAGS="%{rpmldflags}"
 
 %install
@@ -65,6 +65,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/blkrawverify.1*
 %{_mandir}/man1/bno_plot.1*
 %{_mandir}/man1/btt.1*
+%{_mandir}/man1/iowatcher.1*
 %{_mandir}/man1/verify_blkparse.1*
 %{_mandir}/man8/blkiomon.8*
 %{_mandir}/man8/blktrace.8*
