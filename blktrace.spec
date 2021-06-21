@@ -1,12 +1,12 @@
 Summary:	Utilities for block layer I/O tracing
 Summary(pl.UTF-8):	Narzędzia do śledzenia we/wy warstwy blokowej
 Name:		blktrace
-Version:	1.2.0
+Version:	1.3.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/System
-Source0:	http://brick.kernel.dk/snaps/%{name}-%{version}.tar.bz2
-# Source0-md5:	b9a80b7cc0a50f7a96d34c570ab8224d
+Source0:	https://brick.kernel.dk/snaps/%{name}-%{version}.tar.bz2
+# Source0-md5:	aa9bc7d76870d8dae56aa816527e8e15
 BuildRequires:	libaio-devel
 BuildRequires:	sed >= 4.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -27,7 +27,7 @@ warstwy blokowej.
 %prep
 %setup -q
 
-%{__sed} -i -e '1s, /usr/bin/env python,/usr/bin/python,' btt/b??_plot.py
+%{__sed} -i -e '1s, /usr/bin/env python,%{__python3},' btt/b??_plot.py
 
 %build
 %{__make} -j1 \
